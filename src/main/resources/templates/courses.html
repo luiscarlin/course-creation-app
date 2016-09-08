@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+  <head>
+    <title th:text="${'Home Courses'}">Title of the page</title>
+  </head>
+  
+  <body>
+    <div>
+      <h1 th:text="${'Your Courses Homepage'}">header of the site</h1>
+    </div>
+    
+    <div th:each="course : ${courses}" th:object="${course}">
+       <p th:text="${course.name}">A course name</p>
+    </div>
+   
+    <div th:if="${#lists.isEmpty(courses)}">
+      You have no courses
+    </div>
+    
+    <div style="margin-top: 1em;">
+      <a href="createCourse">Create a New Course</a>
+    </div>
+  </body>
+</html>
