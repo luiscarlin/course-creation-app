@@ -28,6 +28,7 @@ public class CourseController {
 	public String courses(ModelMap model) {
 		List<Course> courses = courseRepo.findAll();
 		model.put("courses", courses);
+		model.put("course", new Course());
 		return "courses";
 	}
 

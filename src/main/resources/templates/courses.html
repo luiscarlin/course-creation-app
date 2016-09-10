@@ -2,6 +2,36 @@
 <html xmlns:th="http://thymeleaf.org">
   <head>
     <title th:text="${'Home Courses'}">Title of the page</title>
+    <link href="https://code.jquery.com/ui/1.12.0/themes/ui-lightness/jquery-ui.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+    	  $("#create-course-dialog").dialog({
+    		  autoOpen : true,
+    		  title: "Create a course",
+    		  buttons: [{
+ 
+    			  text: "Ok",
+    		              icons: {
+    		                primary: "ui-icon-heart"
+    		              },
+    		              click: function() {
+    		                $( this ).dialog( "close" );
+    		              }
+    		         
+    		              // Uncommenting the following line would hide the text,
+    		              // resulting in the label being used as a tooltip
+    		              //showText: false
+    		            }
+    		          ]
+    		  
+    	  });
+    	  
+      });
+    
+    </script>
+    
   </head>
   
   <body>
@@ -21,6 +51,12 @@
     
     <div style="margin-top: 1em;">
       <a href="createCourse">Create a New Course</a>
+    </div>
+    
+    <div id="create-course-dialog">
+      <form id="frame-create-course" method="post" action="" th:object="${course}">
+          Coursestest Name: <input type="text" th:field="${course.name}"/>
+      </form>
     </div>
   </body>
 </html>
