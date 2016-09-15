@@ -25,13 +25,19 @@ public class CourseController {
 	}
 
 	@RequestMapping(value="/courses", method=RequestMethod.GET)
-	public String courses(ModelMap model) {
+	public String coursesGet(ModelMap model) {
 		List<Course> courses = courseRepo.findAll();
 		model.put("courses", courses);
 		model.put("course", new Course());
 		return "courses";
 	}
 
+	@RequestMapping(value="/courses", method=RequestMethod.POST)
+	public String coursesPost(@ModelAttribute Course course, ModelMap model) {
+		courseRepo.save(course);
+		return "redirect:/";
+	}
+	
 	@RequestMapping(value="createCourse", method=RequestMethod.GET)
 	public String createCourseGet (ModelMap model) {
 		Course course = new Course();

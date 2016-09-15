@@ -2,22 +2,33 @@
 <html xmlns:th="http://thymeleaf.org">
   <head>
     <title th:text="${'Home Courses'}">Title of the page</title>
-    <link href="https://code.jquery.com/ui/1.12.0/themes/ui-lightness/jquery-ui.css" rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"/>
     <script type="text/javascript">
       $(function() {
-    	  $("#create-course-dialog").dialog({
-    		  autoOpen : true,
+    	  dialog = $("#create-course-dialog").dialog({
+    		  autoOpen : false,
     		  title: "Create a course",
-    		  buttons: [{}
-    		            }
-    		          ]
-    		  
+    		  modal: true,
+    		  closeOnEscape: true,
+    		  buttons: {
+    	        "Create Course": function() {
+    	        	$("#create-course-form").submit();
+    	        },
+    	        Cancel: function() {
+    	        	dialog.dialog("close");
+    	        }
+    		  },
+    		  close: function() {
+    		      dialog.dialog("close");
+    		  }
     	  });
     	  
-      });
-    
+    	  $("#create-course-btn").click(function() {
+             dialog.dialog("open"); 
+    	  });
+      });   
     </script>
     
   </head>
@@ -38,13 +49,14 @@
     </div>
     
     <div style="margin-top: 1em;">
-      <a href="createCourse">Create a New Course</a>
+      <button id="create-course-btn">Create a New Course</button>
     </div>
     
     <div id="create-course-dialog">
-      <form id="frame-create-course" method="post" action="" th:object="${course}">
-          Coursestest Name: <input type="text" th:field="${course.name}"/>
-      </form>
+	  <form id="create-course-form" method="post" action="" th:object="${course}">
+	    <label>Course Name</label>
+	    <input type="text" th:field="${course.name}"/>
+	  </form>
     </div>
   </body>
 </html>
