@@ -2,23 +2,56 @@
 <html xmlns:th="http://thymeleaf.org">
   <head>
     <title th:text="${'Editing ' + {course.name}}">Title of the page</title>
+    <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"/>
+    <script type="text/javascript">
+      $(function() {
+    	  dialog = $("#create-section-dialog").dialog({
+    		  autoOpen : false,
+    		  title: "Create a section",
+    		  modal: true,
+    		  closeOnEscape: true,
+    		  buttons: {
+    	        Create: function() {
+    	        	//$("#create-course-form").submit();
+    	        },
+    	        Cancel: function() {
+    	        	dialog.dialog("close");
+    	        }
+    		  },
+    		  close: function() {
+    		      dialog.dialog("close");
+    		  }
+    	  });
+    	  
+    	  $("#create-section-btn").click(function() {
+             dialog.dialog("open"); 
+    	  });
+      });   
+    </script>
   </head>
   
   <body>
     <div>
-      <h1 th:text="${course.name}">header of the site</h1>
+      <h1 th:text="${'Sections in ' + {course.name}}">header of the site</h1>
     </div>
     
-    <div th:each="lesson : ${lessons}" th:object="${lessson}">
-       <span th:text="${lesson.name}">A lesson name</span>
+    <div th:each="section : ${sections}" th:object="${sections}">
+       <span th:text="${section.name}">A section name</span>
     </div>
    
-    <div th:if="${#lists.isEmpty(lessons)}">
-      You have no lessons
+    <div th:if="${#lists.isEmpty(sections)}">
+      You have no sections
     </div>
     
-    <div style="margin-top: 1em;">
-      <a th:href="${'addLesson/' + {course.id}}">Add A New Lesson</a>
+   <div style="margin-top: 1em;">
+      <button id="create-section-btn">Add a New Section</button>
+    </div>
+    
+    <div id="create-section-dialog">
+	  <label>Name</label>
+	  <input type="text"/>
     </div>
     
     <div style="margin-top: 1em;">

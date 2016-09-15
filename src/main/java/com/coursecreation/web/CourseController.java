@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.coursecreation.domain.Course;
+import com.coursecreation.domain.Section;
 import com.coursecreation.repository.CourseRepository;
 
 @Controller
@@ -49,16 +51,17 @@ public class CourseController {
 		courseRepo.save(course);
 		return "redirect:/";
 	}
-	
+	*/
 	@RequestMapping(value="editCourse/{courseId}", method=RequestMethod.GET)
 	public String editCourseGet (@PathVariable Long courseId, ModelMap model) {
 		Course course = courseRepo.findOne(courseId);
 		
 		model.put("course", course);
-		model.put("lessons", course.getLessons());
+		model.put("lessons", course.getSections());
+		model.put("section", new Section());
 		return "editCourse";
 	}
-	
+	/*
 	@RequestMapping(value="editCourse/addLesson/{courseId}", method=RequestMethod.GET)
 	public String addLessonGet (@PathVariable Long courseId, ModelMap model) {
 		Course course = courseRepo.findOne(courseId);
