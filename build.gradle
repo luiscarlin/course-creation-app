@@ -25,12 +25,23 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+    dev
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-devtools')
+	
 	runtime('mysql:mysql-connector-java')
+	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	
+	dev('org.springframework.boot:spring-boot-devtools')
+}
+
+// only run devtools when doing bootRun
+bootRun {
+    classpath = sourceSets.main.runtimeClasspath + configurations.dev
 }
