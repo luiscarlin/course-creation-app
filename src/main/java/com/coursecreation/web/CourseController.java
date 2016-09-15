@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.coursecreation.domain.Course;
-import com.coursecreation.domain.Lesson;
 import com.coursecreation.repository.CourseRepository;
 
 @Controller
@@ -38,6 +36,7 @@ public class CourseController {
 		return "redirect:/";
 	}
 	
+	/*
 	@RequestMapping(value="createCourse", method=RequestMethod.GET)
 	public String createCourseGet (ModelMap model) {
 		Course course = new Course();
@@ -76,7 +75,7 @@ public class CourseController {
 		courseRepo.save(course);
 		return "redirect:/editCourse/" + courseId;
 	}
-
+	*/
 
 	@Autowired
 	public void setCourseRepo(CourseRepository courseRepo) {

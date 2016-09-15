@@ -8,14 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Course {
+public class Section {
 
 	private Long id; 
 	private String name;
-	private Set<Section> sections = new HashSet<>();
+	private Set<Lesson> lessons = new HashSet<>();
+	private Course course;
 
 	@Id
 	@GeneratedValue
@@ -35,12 +37,21 @@ public class Course {
 		this.name = name;
 	}
 
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="course")
-	public Set<Section> getSections() {
-		return sections;
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="section")
+	public Set<Lesson> getLessons() {
+		return lessons;
 	}
 
-	public void setSections(Set<Section> sections) {
-		this.sections = sections;
+	public void setLessons(Set<Lesson> lessons) {
+		this.lessons = lessons;
+	}
+	
+	@ManyToOne
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 }
