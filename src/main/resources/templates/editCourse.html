@@ -5,7 +5,11 @@
     <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"/>
-    <script type="text/javascript">
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+               
+      var courseId = /*[[${course.id}]]*/  '1';
+             
       $(function() {
     	  dialog = $("#create-section-dialog").dialog({
     		  autoOpen : false,
@@ -14,7 +18,18 @@
     		  closeOnEscape: true,
     		  buttons: {
     	        Create: function() {
-    	        	//$("#create-course-form").submit();
+    	        	$.ajax({
+    	        	    url: "createSection",
+    	        	    type: "post",
+    	        	    data: {"courseId" : courseId, "sectionName" : $("#section-name").val()},
+    	        	    success: function(data) { 
+                            console.log(data);
+                            location.reload();
+    	        	    },
+    	        	    error: function() {
+    	        	    	console.log("error");
+    	        	    }	    	
+    	        	});
     	        },
     	        Cancel: function() {
     	        	dialog.dialog("close");
@@ -28,7 +43,8 @@
     	  $("#create-section-btn").click(function() {
              dialog.dialog("open"); 
     	  });
-      });   
+      });
+    /*]]>*/
     </script>
   </head>
   
@@ -37,7 +53,7 @@
       <h1 th:text="${'Sections in ' + {course.name}}">header of the site</h1>
     </div>
     
-    <div th:each="section : ${sections}" th:object="${sections}">
+    <div th:each="section : ${sections}" th:object="${section}">
        <span th:text="${section.name}">A section name</span>
     </div>
    
@@ -51,7 +67,7 @@
     
     <div id="create-section-dialog">
 	  <label>Name</label>
-	  <input type="text"/>
+	  <input type="text" id="section-name"/>
     </div>
     
     <div style="margin-top: 1em;">

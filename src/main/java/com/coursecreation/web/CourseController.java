@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coursecreation.domain.Course;
 import com.coursecreation.domain.Section;
@@ -57,10 +59,25 @@ public class CourseController {
 		Course course = courseRepo.findOne(courseId);
 		
 		model.put("course", course);
-		model.put("lessons", course.getSections());
-		model.put("section", new Section());
+		model.put("sections", course.getSections());
 		return "editCourse";
 	}
+	
+	@RequestMapping(value="editCourse/createSection", method=RequestMethod.POST)
+	public @ResponseBody Course createSection (@RequestParam Long courseId, @RequestParam String sectionName) {
+		Course course = courseRepo.findOne(courseId);
+		
+		Section section = new Section();
+		section.setName(sectionName);
+		section.setCourse(course);
+		course.getSections().add(section);
+		
+		Course savedCourse = courseRepo.save(course);
+		
+		return savedCourse;
+	}
+	
+	
 	/*
 	@RequestMapping(value="editCourse/addLesson/{courseId}", method=RequestMethod.GET)
 	public String addLessonGet (@PathVariable Long courseId, ModelMap model) {
